@@ -109,7 +109,8 @@ class Modal extends Component {
           value: '0x2386f26fc10000',
           data: '0x',
           gasPrice: '0x165a0bc00',
-          gasLimit: '0x5208'
+          gasLimit: '0x5208',
+          shippingAddress: data.personalData.shippingAddress
         })
           .then(txHash => this.setState({ txHash }))
           .catch(error => this.setState({ error }));
