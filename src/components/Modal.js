@@ -60,7 +60,7 @@ const StyledCardContainer = styled.div`
   position: relative;
   width: 100%;
   height: 100%;
-  min-height: 512px;
+  min-height: 582px;
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -84,6 +84,11 @@ class Modal extends Component {
   };
   componentDidMount() {
     this.onModalInit();
+  }
+  componentDidUpdate(prevProps) {
+    if (!prevProps.showModal && this.props.showModal) {
+      this.onModalInit();
+    }
   }
   onModalInit = () => {
     this.setState({ fetching: true, error: '' });
@@ -146,22 +151,26 @@ class Modal extends Component {
         <StyledContainer>
           <StyledHitbox onClick={this.onClose} />
           <StyledColumn>
-            <Card maxWidth={500} background="white">
-              <StyledCardContainer>
-                <StyledSection expand>
-                  {this.state.fetching && !data ? (
-                    <Loader color="dark" background="white" />
-                  ) : data ? (
-                    <QRCodeDisplay data={data} />
-                  ) : (
-                    <div />
-                  )}
-                </StyledSection>
-                <StyledSection>
-                  <Button onClick={this.onClose}>Cancel</Button>
-                </StyledSection>
-              </StyledCardContainer>
-            </Card>
+            {this.props.showModal ? (
+              <Card maxWidth={500} background="white">
+                <StyledCardContainer>
+                  <StyledSection expand>
+                    {this.state.fetching && !data ? (
+                      <Loader color="dark" background="white" />
+                    ) : data ? (
+                      <QRCodeDisplay data={data} />
+                    ) : (
+                      <div />
+                    )}
+                  </StyledSection>
+                  <StyledSection>
+                    <Button onClick={this.onClose}>Cancel</Button>
+                  </StyledSection>
+                </StyledCardContainer>
+              </Card>
+            ) : (
+              <div />
+            )}
           </StyledColumn>
         </StyledContainer>
       </StyledLightbox>

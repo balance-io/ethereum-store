@@ -6,6 +6,13 @@ import logo from '../assets/ethereum-logo.png';
 
 const headerSize = 135;
 
+const SWrapper = styled.div`
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 0 20px;
+`;
+
 const SHeader = styled.header`
   display: flex;
   max-width: 1000px;
@@ -30,12 +37,6 @@ const SMenu = styled.ul`
   & li {
     margin-left: 16px;
   }
-`;
-
-const SWrapper = styled.div`
-  position: relative;
-  width: 100%;
-  height: 100%;
 `;
 
 const SContent = styled.div`

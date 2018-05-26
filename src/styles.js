@@ -77,7 +77,7 @@ export const globalStyles = `
   }
 
   body {
-    background: rgb(${colors.lightGrey});
+    background: rgb(${colors.white});
     font-family: Roboto, sans-serif;
     font-weight: ${fonts.weight.normal};
     font-style: normal;
