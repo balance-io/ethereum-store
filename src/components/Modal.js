@@ -86,11 +86,9 @@ class Modal extends Component {
     this.onModalInit();
   }
   componentDidUpdate(prevProps) {
-    if (!prevProps.showModal && this.props.showModal) {
-      console.log('componentDidUpdate onModalInit');
+    if (!prevProps.modalShow && this.props.modalShow) {
       this.onModalInit();
-    } else if (prevProps.showModal && !this.props.showModal) {
-      console.log('componentDidUpdate onClose');
+    } else if (prevProps.modalShow && !this.props.modalShow) {
       this.onClose();
     }
   }
@@ -113,14 +111,19 @@ class Modal extends Component {
         this.setState({ error });
       } else if (data) {
         const accountAddress = data.address.toLowerCase();
-        console.log(data);
         walletConnectSignTransaction({
           from: accountAddress,
           to: '0x9b7b2B4f7a391b6F14A81221AE0920A9735B67Fb',
           value: '0x2386f26fc10000',
           data: '0x',
           gasPrice: '0x165a0bc00',
-          gasLimit: '0x5208'
+          gasLimit: '0x5208',
+          order: {
+            ...this.props.modalData,
+            name: data.personalData.personalDetails.name,
+            email: data.personalData.personalDetails.email,
+            shippingAddress: data.personalData.shippingAddress
+          }
         })
           .then(txHash => this.setState({ txHash }))
           .catch(error => this.setState({ error }));
@@ -132,14 +135,14 @@ class Modal extends Component {
       fetching: false,
       webConnector: null
     });
-    this.props.toggleModal(false);
+    this.props.modalToggle(false);
   };
   componentWillUnmount() {
     this.onClose();
   }
   render = () => {
     const body = document.body || document.getElementsByTagName('body')[0];
-    if (this.props.showModal) {
+    if (this.props.modalShow) {
       body.style.overflow = 'hidden';
     } else {
       body.style.overflow = 'auto';
@@ -152,11 +155,11 @@ class Modal extends Component {
         }"}`
       : null;
     return (
-      <StyledLightbox show={this.props.showModal}>
+      <StyledLightbox show={this.props.modalShow}>
         <StyledContainer>
           <StyledHitbox onClick={this.onClose} />
           <StyledColumn>
-            {this.props.showModal ? (
+            {this.props.modalShow ? (
               <Card maxWidth={500} background="white">
                 <StyledCardContainer>
                   <StyledSection expand>
@@ -184,8 +187,9 @@ class Modal extends Component {
 }
 
 Modal.propTypes = {
-  showModal: PropTypes.bool.isRequired,
-  toggleModal: PropTypes.func.isRequired
+  modalShow: PropTypes.bool.isRequired,
+  modalData: PropTypes.object.isRequired,
+  modalToggle: PropTypes.func.isRequired
 };
 
 export default Modal;

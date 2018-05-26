@@ -15,6 +15,7 @@ export const fonts = {
     small: '12px',
     medium: '16px',
     large: '18px',
+    xlarge: '36px',
     big: '22px',
     h1: '42px',
     h2: '32px',
@@ -28,6 +29,11 @@ export const fonts = {
     normal: 400,
     semibold: 500,
     bold: 700
+  },
+  family: {
+    SFProText:
+      '-apple-system, system-ui, BlinkMacSystemFont, "SF Pro Text", Roboto, Helvetica, Arial, sans-serif',
+    SFMono: '"SFMono", "Roboto Mono", Courier New, Courier, monospace'
   }
 };
 
@@ -79,7 +85,7 @@ export const globalStyles = `
 
   body {
     background: rgb(${colors.white});
-    font-family: Roboto, sans-serif;
+    font-family: ${fonts.family.SFProText};
     font-weight: ${fonts.weight.normal};
     font-style: normal;
   	font-stretch: normal;

@@ -56,7 +56,7 @@ const menu = [
   { title: 'Caps', pathname: '/caps' }
 ];
 
-const Layout = ({ children, showModal, toggleModal, ...props }) => (
+const Layout = ({ children, modalShow, modalData, modalToggle, ...props }) => (
   <SWrapper {...props}>
     <SHeader>
       <SLogo>
@@ -65,14 +65,19 @@ const Layout = ({ children, showModal, toggleModal, ...props }) => (
       <SMenu>{menu.map(item => <li key={item.title}>{item.title}</li>)}</SMenu>
     </SHeader>
     <SContent>{children}</SContent>
-    <Modal showModal={showModal} toggleModal={toggleModal} />
+    <Modal
+      modalShow={modalShow}
+      modalData={modalData}
+      modalToggle={modalToggle}
+    />
   </SWrapper>
 );
 
 Layout.propTypes = {
   children: PropTypes.node.isRequired,
-  showModal: PropTypes.bool.isRequired,
-  toggleModal: PropTypes.func.isRequired
+  modalShow: PropTypes.bool.isRequired,
+  modalData: PropTypes.object.isRequired,
+  modalToggle: PropTypes.func.isRequired
 };
 
 export default Layout;

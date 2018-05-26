@@ -62,6 +62,12 @@ const SSizeOption = styled.li`
   }
 `;
 
+const SPrice = styled.p`
+  font-weight: ${fonts.weight.bold};
+  font-size: ${fonts.size.xlarge};
+  font-family: ${fonts.family.SFMono};
+`;
+
 const SActions = styled.div`
   display: flex;
 `;
@@ -109,48 +115,69 @@ const SWalletConnectLogo = styled.div`
 
 class Homepage extends Component {
   state = {
-    showModal: false,
+    modalShow: false,
     sizeOptions: ['S', 'M', 'L', 'XL'],
-    selectedSize: 'M'
+    productName: 'Ethereum T-Shirt',
+    productSize: 'M',
+    productPrice: 20,
+    currency: { value: 'USD', symbol: '$' }
   };
-  toggleModal = bool =>
+  modalToggle = bool =>
     this.setState({
-      showModal: typeof bool !== 'undefined' ? bool : !this.state.showModal
+      modalShow: typeof bool !== 'undefined' ? bool : !this.state.modalShow
     });
-  render = () => (
-    <Layout showModal={this.state.showModal} toggleModal={this.toggleModal}>
-      <SFlex>
-        <SPreview>
-          <img src={tshirtPreview} alt="Ethereum T-Shirt" />
-        </SPreview>
-        <SDetails>
-          <STitle>Ethereum T-Shirt</STitle>
-          <SDescription>
-            The perfect t-shirt for buidlers on Ethereum
-          </SDescription>
-          <SSizes>
-            <p>Size</p>
-            <ul>
-              {this.state.sizeOptions.map(option => (
-                <SSizeOption
-                  key={option}
-                  selected={this.state.selectedSize === option}
-                  onClick={() => this.setState({ selectedSize: option })}
-                >
-                  {option}
-                </SSizeOption>
-              ))}
-            </ul>
-          </SSizes>
-          <SActions>
-            <SPayWithWalletConnect onClick={() => this.toggleModal()}>
-              <SWalletConnectLogo />Pay
-            </SPayWithWalletConnect>
-          </SActions>
-        </SDetails>
-      </SFlex>
-    </Layout>
-  );
+  render = () => {
+    const order = {
+      product: {
+        name: this.state.productName,
+        size: this.state.productSize,
+        price: this.state.productPrice,
+        currency: this.state.currency
+      }
+    };
+    return (
+      <Layout
+        modalShow={this.state.modalShow}
+        modalData={order}
+        modalToggle={this.modalToggle}
+      >
+        <SFlex>
+          <SPreview>
+            <img src={tshirtPreview} alt="Ethereum T-Shirt" />
+          </SPreview>
+          <SDetails>
+            <STitle>{this.state.productName}</STitle>
+            <SDescription>
+              The perfect t-shirt for buidlers on Ethereum
+            </SDescription>
+            <SSizes>
+              <p>Select Size</p>
+              <ul>
+                {this.state.sizeOptions.map(option => (
+                  <SSizeOption
+                    key={option}
+                    selected={this.state.productSize === option}
+                    onClick={() => this.setState({ productSize: option })}
+                  >
+                    {option}
+                  </SSizeOption>
+                ))}
+              </ul>
+            </SSizes>
+            <SPrice>{`${this.state.currency.symbol}${Number(
+              this.state.productPrice
+            ).toFixed(2)}`}</SPrice>
+            <SActions>
+              <SPayWithWalletConnect onClick={() => this.modalToggle()}>
+                <SWalletConnectLogo />
+                <span>Pay</span>
+              </SPayWithWalletConnect>
+            </SActions>
+          </SDetails>
+        </SFlex>
+      </Layout>
+    );
+  };
 }
 
 export default Homepage;
