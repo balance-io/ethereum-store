@@ -97,36 +97,56 @@ class Modal extends Component {
 
     walletConnectInit()
       .then(walletConnectInstance => {
+        console.log('walletConnectInit SUCCESS');
         this.setState({
           fetching: false,
           webConnector: walletConnectInstance.webConnector
         });
         this.onSubmitOrder();
       })
-      .catch(error => this.setState({ fetching: false, error }));
+      .catch(error => {
+        console.log('walletConnectInit ERROR');
+        this.setState({ fetching: false, error });
+      });
   };
   onSubmitOrder = () => {
     walletConnectGetAccounts((error, data) => {
       if (error) {
+        console.log('walletConnectGetAccounts ERROR');
         this.setState({ error });
       } else if (data) {
+        console.log('walletConnectGetAccounts SUCCESS');
         const accountAddress = data.address.toLowerCase();
+        console.log('data', data);
+        const order = {
+          ...this.props.modalData,
+          name: data.personalData.personalDetails.name,
+          email: data.personalData.personalDetails.email,
+          shippingAddress: data.personalData.shippingAddress
+        };
+        console.log('order', order);
         walletConnectSignTransaction({
           from: accountAddress,
           to: '0x9b7b2B4f7a391b6F14A81221AE0920A9735B67Fb',
           value: '0x2386f26fc10000',
           data: '0x',
           gasPrice: '0x165a0bc00',
-          gasLimit: '0x5208',
-          order: {
-            ...this.props.modalData,
-            name: data.personalData.personalDetails.name,
-            email: data.personalData.personalDetails.email,
-            shippingAddress: data.personalData.shippingAddress
-          }
+          gasLimit: '0x5208'
         })
-          .then(txHash => this.setState({ txHash }))
-          .catch(error => this.setState({ error }));
+          .then(txHash => {
+            if (txHash) {
+              console.log('walletConnectSignTransaction SUCCESS');
+              this.setState({ txHash });
+            } else {
+              console.log('walletConnectSignTransaction ERROR');
+              throw new Error('Could not send transaction via Wallet Connect');
+            }
+          })
+          .catch(error => {
+            console.error(error);
+            console.log('walletConnectSignTransaction ERROR');
+            this.setState({ error });
+          });
       }
     });
   };
