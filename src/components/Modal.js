@@ -5,6 +5,11 @@ import Card from '../components/Card';
 import Button from '../components/Button';
 import Loader from '../components/Loader';
 import QRCodeDisplay from '../components/QRCodeDisplay';
+import {
+  walletConnectInit,
+  walletConnectGetAccounts,
+  walletConnectSignTransaction
+} from '../walletconnect';
 import { colors, transitions } from '../styles';
 
 const StyledLightbox = styled.div`
@@ -72,8 +77,44 @@ const StyledSection = styled.div`
 
 class Modal extends Component {
   state = {
+    error: '',
     fetching: false,
-    webConnector: null
+    webConnector: null,
+    txHash: ''
+  };
+  componentDidMount() {
+    this.onModalInit();
+  }
+  onModalInit = () => {
+    this.setState({ fetching: true, error: '' });
+    walletConnectInit()
+      .then(walletConnectInstance => {
+        this.setState({
+          fetching: false,
+          webConnector: walletConnectInstance.webConnector
+        });
+        this.onSubmitOrder();
+      })
+      .catch(error => this.setState({ fetching: false, error }));
+  };
+  onSubmitOrder = () => {
+    walletConnectGetAccounts((error, data) => {
+      if (error) {
+        this.setState({ error });
+      } else if (data) {
+        const accountAddress = data.address.toLowerCase();
+        walletConnectSignTransaction({
+          from: accountAddress,
+          to: '0x9b7b2B4f7a391b6F14A81221AE0920A9735B67Fb',
+          value: '0x2386f26fc10000',
+          data: '0x',
+          gasPrice: '0x165a0bc00',
+          gasLimit: '0x5208'
+        })
+          .then(txHash => this.setState({ txHash }))
+          .catch(error => this.setState({ error }));
+      }
+    });
   };
   onClose = () => {
     this.setState({
@@ -82,6 +123,9 @@ class Modal extends Component {
     });
     this.props.toggleModal();
   };
+  componentWillUnmount() {
+    this.onClose();
+  }
   render = () => {
     const body = document.body || document.getElementsByTagName('body')[0];
     if (this.props.showModal) {
