@@ -92,6 +92,7 @@ class Modal extends Component {
   }
   onModalInit = () => {
     this.setState({ fetching: true, error: '' });
+
     walletConnectInit()
       .then(walletConnectInstance => {
         this.setState({
