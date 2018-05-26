@@ -76,9 +76,12 @@ const SPayWithWalletConnect = styled.button`
   position: relative;
   margin-top: 20px;
   cursor: pointer;
-  padding: 0px 0 4px 24px;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border-radius: 10px;
-  font-family: 'SF Pro Text';
+  font-family: ${fonts.family.SFProText};
   letter-spacing: -0.63px;
   font-size: ${fonts.size.h4};
   font-weight: 600;
@@ -90,6 +93,9 @@ const SPayWithWalletConnect = styled.button`
   background-color: rgb(${colors.blue});
   transition: 0.15s ease;
   will-change: transform;
+  & span {
+    margin-left: 6px;
+  }
   &:hover {
     box-shadow: 0 7px 14px 0 rgba(50, 50, 93, 0.1),
       0 3px 6px 0 rgba(0, 0, 0, 0.08), inset 0 0 1px 0 rgba(0, 0, 0, 0.06);
@@ -105,9 +111,6 @@ const SPayWithWalletConnect = styled.button`
 `;
 
 const SWalletConnectLogo = styled.div`
-  position: absolute;
-  top: 16px;
-  left: 110px;
   width: 30px;
   height: 18px;
   background: url(${walletConnectLogo});
