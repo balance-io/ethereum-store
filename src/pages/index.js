@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import Layout from '../layout';
 import tshirtPreview from '../assets/tshirt-preview.jpg';
+import walletConnectLogo from '../assets/walletconnect-logo.svg';
 import { fonts, colors } from '../styles';
 
 const SFlex = styled.div`
@@ -66,16 +67,41 @@ const SActions = styled.div`
 `;
 
 const SPayWithWalletConnect = styled.button`
+  position: relative;
+  margin-top: 20px;
   cursor: pointer;
-  padding: 14px 8px;
+  padding: 0px 0 4px 24px;
   border-radius: 10px;
-  font-size: ${fonts.size.medium};
-  width: 100px;
+  font-family: "SF Pro Text";
+  letter-spacing: -0.63px;
+  font-size: ${fonts.size.h4};
+  font-weight: 600;
+  width: 300px;
+  height: 53px;
+  box-shadow: 0 4px 6px 0 rgba(50,50,93,0.11), 0 1px 3px 0 rgba(0,0,0,0.08), inset 0 0 1px 0 rgba(0,0,0,0.06);
   color: rgb(${colors.white});
   background-color: rgb(${colors.blue});
+  transition: 0.15s ease;
+  will-change: transform;
   &:hover {
-    opacity: 0.7;
+    box-shadow: 0 7px 14px 0 rgba(50, 50, 93, 0.1), 0 3px 6px 0 rgba(0, 0, 0, 0.08), inset 0 0 1px 0 rgba(0, 0, 0, 0.06);
+    transform: translateY(-1px);
+    background-color: #3388FF;
   }
+  &:active {
+    box-shadow: 0 4px 6px 0 rgba(50,50,93,0.11), 0 1px 3px 0 rgba(0,0,0,0.08), inset 0 0 1px 0 rgba(0,0,0,0.06);
+    transform: translateY(1px);
+    background-color: #227AF5;
+  }
+`;
+
+const SWalletConnectLogo = styled.div`
+  position: absolute;
+  top: 16px;
+  left: 110px;
+  width: 30px;
+  height: 18px;
+  background: url(${walletConnectLogo});
 `;
 
 class Homepage extends Component {
@@ -109,7 +135,7 @@ class Homepage extends Component {
           </SSizes>
           <SActions>
             <SPayWithWalletConnect onClick={() => {}}>
-              Pay
+              <SWalletConnectLogo />Pay
             </SPayWithWalletConnect>
           </SActions>
         </SDetails>

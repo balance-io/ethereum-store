@@ -3,7 +3,8 @@ export const colors = {
   black: '0, 0, 0',
   dark: '34, 34, 34',
   grey: '221, 221, 221',
-  blue: '64, 109, 187',
+  blue: '36, 127, 255',
+  blueAlt: '59, 153, 252',
   yellow: '246, 203, 71',
   green: '79, 180, 128',
   red: '221, 69, 65'
@@ -87,8 +88,6 @@ export const globalStyles = `
   button.active {
     background-image: none;
     outline: 0;
-    -webkit-box-shadow: none;
-            box-shadow: none;
   }
 
   [tabindex] {
