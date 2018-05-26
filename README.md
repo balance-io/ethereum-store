@@ -9,4 +9,3 @@ For development
 For production
 
 `yarn build`
-git
