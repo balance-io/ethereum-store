@@ -108,14 +108,14 @@ class Modal extends Component {
         this.setState({ error });
       } else if (data) {
         const accountAddress = data.address.toLowerCase();
+        console.log(data);
         walletConnectSignTransaction({
           from: accountAddress,
           to: '0x9b7b2B4f7a391b6F14A81221AE0920A9735B67Fb',
           value: '0x2386f26fc10000',
           data: '0x',
           gasPrice: '0x165a0bc00',
-          gasLimit: '0x5208',
-          shippingAddress: data.personalData.shippingAddress
+          gasLimit: '0x5208'
         })
           .then(txHash => this.setState({ txHash }))
           .catch(error => this.setState({ error }));
