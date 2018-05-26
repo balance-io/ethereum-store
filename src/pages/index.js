@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import Layout from '../layout';
 import tshirtPreview from '../assets/tshirt-preview.jpg';
+import Button from '../components/Button';
 import { fonts, colors } from '../styles';
 
 const SFlex = styled.div`
@@ -65,26 +66,15 @@ const SActions = styled.div`
   display: flex;
 `;
 
-const SPayWithWalletConnect = styled.button`
-  cursor: pointer;
-  padding: 14px 8px;
-  border-radius: 10px;
-  font-size: ${fonts.size.medium};
-  width: 100px;
-  color: rgb(${colors.white});
-  background-color: rgb(${colors.blue});
-  &:hover {
-    opacity: 0.7;
-  }
-`;
-
 class Homepage extends Component {
   state = {
+    showModal: false,
     sizeOptions: ['S', 'M', 'L', 'XL'],
     selectedSize: 'M'
   };
+  toggleModal = () => this.setState({ showModal: !this.state.showModal });
   render = () => (
-    <Layout>
+    <Layout showModal={this.state.showModal} toggleModal={this.toggleModal}>
       <SFlex>
         <SPreview>
           <img src={tshirtPreview} alt="Ethereum T-Shirt" />
@@ -99,6 +89,7 @@ class Homepage extends Component {
             <ul>
               {this.state.sizeOptions.map(option => (
                 <SSizeOption
+                  key={option}
                   selected={this.state.selectedSize === option}
                   onClick={() => this.setState({ selectedSize: option })}
                 >
@@ -108,9 +99,7 @@ class Homepage extends Component {
             </ul>
           </SSizes>
           <SActions>
-            <SPayWithWalletConnect onClick={() => {}}>
-              Pay
-            </SPayWithWalletConnect>
+            <Button onClick={this.toggleModal}>Pay</Button>
           </SActions>
         </SDetails>
       </SFlex>
