@@ -1,40 +1,78 @@
 import React from 'react';
 import styled from 'styled-components';
-import logo from './logo.svg';
-import { fonts } from './styles';
+import Layout from '../layout';
+import tshirtPreview from '../assets/tshirt-preview.jpg';
+import { fonts, colors } from '../styles';
 
-const StyledApp = styled.div`
-  text-align: center;
+const SFlex = styled.div`
+  width: 100%;
+  display: flex;
 `;
 
-const StyledLogo = styled.img`
-  height: 80px;
+const SPreview = styled.div`
+  width: 70%;
+  & img {
+    width: 100%;
+  }
 `;
 
-const StyledHeader = styled.header`
-  height: 150px;
-  padding: 20px;
+const SDetails = styled.div`
+  width: 30%;
+  display: flex;
+  flex-direction: column;
 `;
 
-const StyledTitle = styled.h1`
-  font-size: ${fonts.size.h3};
+const STitle = styled.h1`
+  font-size: ${fonts.size.h2};
 `;
 
-const StyledParagraph = styled.p`
-  font-size: ${fonts.size.large};
-  margin: 20px auto;
+const SDescription = styled.p`
+  color: rgb(${colors.grey});
 `;
 
-const App = () => (
-  <StyledApp>
-    <StyledHeader>
-      <StyledLogo src={logo} alt="logo" />
-      <StyledTitle>Welcome to React</StyledTitle>
-    </StyledHeader>
-    <StyledParagraph>
-      To get started, edit <code>src/App.js</code> and save to reload.
-    </StyledParagraph>
-  </StyledApp>
+const SSizes = styled.ul`
+  display: flex;
+  justify-content: space-between;
+  & li {
+    margin: 6px;
+  }
+`;
+
+const SActions = styled.div`
+  display: flex;
+`;
+
+const SPayWithWalletConnect = styled.button`
+  padding: 14px 8px;
+  border-radius: 8px;
+  width: 100px;
+  color: rgb(${colors.white});
+  background-color: rgb(${colors.blue});
+`;
+
+const Homepage = () => (
+  <Layout>
+    <SFlex>
+      <SPreview>
+        <img src={tshirtPreview} alt="Ethereum T-Shirt" />
+      </SPreview>
+      <SDetails>
+        <STitle>Ethereum T-Shirt</STitle>
+        <SDescription>
+          The perfect t-shirt for buidlers on Ethereum
+        </SDescription>
+        <SSizes>
+          <li>S</li>
+          <li>M</li>
+          <li>L</li>
+          <li>XL</li>
+        </SSizes>
+        <SActions>
+          <SPayWithWalletConnect onClick={() => {}}>Pay</SPayWithWalletConnect>
+        </SActions>
+      </SDetails>
+    </SFlex>
+  </Layout>
 );
 
-export default App;
+export default Homepage;
