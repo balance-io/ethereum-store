@@ -1,6 +1,6 @@
-# Ethereum Shop
+# Ethereum Store
 
-Demo Ethereum Shop using WalletConnect
+Demo Ethereum Store using WalletConnect
 
 For development
 
