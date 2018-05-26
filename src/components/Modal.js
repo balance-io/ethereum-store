@@ -87,7 +87,11 @@ class Modal extends Component {
   }
   componentDidUpdate(prevProps) {
     if (!prevProps.showModal && this.props.showModal) {
+      console.log('componentDidUpdate onModalInit');
       this.onModalInit();
+    } else if (prevProps.showModal && !this.props.showModal) {
+      console.log('componentDidUpdate onClose');
+      this.onClose();
     }
   }
   onModalInit = () => {
@@ -128,7 +132,7 @@ class Modal extends Component {
       fetching: false,
       webConnector: null
     });
-    this.props.toggleModal();
+    this.props.toggleModal(false);
   };
   componentWillUnmount() {
     this.onClose();

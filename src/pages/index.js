@@ -113,7 +113,10 @@ class Homepage extends Component {
     sizeOptions: ['S', 'M', 'L', 'XL'],
     selectedSize: 'M'
   };
-  toggleModal = () => this.setState({ showModal: !this.state.showModal });
+  toggleModal = bool =>
+    this.setState({
+      showModal: typeof bool !== 'undefined' ? bool : !this.state.showModal
+    });
   render = () => (
     <Layout showModal={this.state.showModal} toggleModal={this.toggleModal}>
       <SFlex>
@@ -140,7 +143,7 @@ class Homepage extends Component {
             </ul>
           </SSizes>
           <SActions>
-            <SPayWithWalletConnect onClick={this.toggleModal}>
+            <SPayWithWalletConnect onClick={() => this.toggleModal()}>
               <SWalletConnectLogo />Pay
             </SPayWithWalletConnect>
           </SActions>
