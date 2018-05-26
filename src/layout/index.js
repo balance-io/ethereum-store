@@ -1,9 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import Modal from '../components/Modal';
 import logo from '../assets/ethereum-logo.png';
 
 const headerSize = 135;
+
+const SWrapper = styled.div`
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 0 20px;
+`;
 
 const SHeader = styled.header`
   display: flex;
@@ -31,12 +39,8 @@ const SMenu = styled.ul`
   }
 `;
 
-const SWrapper = styled.div`
-  width: 100%;
-  height: 100%;
-`;
-
 const SContent = styled.div`
+  position: relative;
   width: 100%;
   max-width: 1000px;
   display: flex;
@@ -52,7 +56,7 @@ const menu = [
   { title: 'Caps', pathname: '/caps' }
 ];
 
-const Layout = ({ children, ...props }) => (
+const Layout = ({ children, showModal, toggleModal, ...props }) => (
   <SWrapper {...props}>
     <SHeader>
       <SLogo>
@@ -61,11 +65,14 @@ const Layout = ({ children, ...props }) => (
       <SMenu>{menu.map(item => <li key={item.title}>{item.title}</li>)}</SMenu>
     </SHeader>
     <SContent>{children}</SContent>
+    <Modal showModal={showModal} toggleModal={toggleModal} />
   </SWrapper>
 );
 
 Layout.propTypes = {
-  children: PropTypes.node.isRequired
+  children: PropTypes.node.isRequired,
+  showModal: PropTypes.bool.isRequired,
+  toggleModal: PropTypes.func.isRequired
 };
 
 export default Layout;
