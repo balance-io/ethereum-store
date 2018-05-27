@@ -14,7 +14,7 @@ import {
 import { colors, transitions } from '../styles';
 
 const StyledLightbox = styled.div`
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;

@@ -5,7 +5,7 @@ import Link from '../components/Link';
 import Modal from '../components/Modal';
 import logo from '../assets/ethereum-logo.png';
 
-const headerSize = 135;
+const headerSize = 100;
 
 const SWrapper = styled.div`
   position: relative;
