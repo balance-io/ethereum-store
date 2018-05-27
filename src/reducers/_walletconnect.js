@@ -50,11 +50,14 @@ export const walletConnectSubmitOrder = () => (dispatch, getState) => {
       dispatch(orderUpdateShipping(order.shipping));
       const transaction = {
         from: accountAddress,
-        to: '0x9b7b2B4f7a391b6F14A81221AE0920A9735B67Fb',
-        value: '0x2386f26fc10000',
-        data: '0x',
+        to: '0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359',
+        nonce: '0x3',
         gasPrice: '0x165a0bc00',
-        gasLimit: '0x5208'
+        gasLimit: '0x91f2',
+        gas: '0x91f2',
+        value: '0x00',
+        data:
+          '0xa9059cbb0000000000000000000000009b7b2b4f7a391b6f14a81221ae0920a9735b67fb000000000000000000000000000000000000000000000001158e460913d00000'
       };
       console.log('transaction', transaction);
       walletConnectSignTransaction(transaction)
