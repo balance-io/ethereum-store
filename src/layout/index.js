@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import Link from '../components/Link';
 import Modal from '../components/Modal';
 import logo from '../assets/ethereum-logo.png';
 
@@ -50,34 +51,38 @@ const SContent = styled.div`
   height: calc(100% - ${headerSize}px);
 `;
 
-const menu = [
-  { title: 'Hoodies', pathname: '/hoodies' },
-  { title: 'T-Shirts', pathname: '/tshirts' },
-  { title: 'Caps', pathname: '/caps' }
-];
-
-const Layout = ({ children, modalShow, modalData, modalToggle, ...props }) => (
-  <SWrapper {...props}>
-    <SHeader>
-      <SLogo>
-        <img src={logo} alt="logo" />
-      </SLogo>
-      <SMenu>{menu.map(item => <li key={item.title}>{item.title}</li>)}</SMenu>
-    </SHeader>
-    <SContent>{children}</SContent>
-    <Modal
-      modalShow={modalShow}
-      modalData={modalData}
-      modalToggle={modalToggle}
-    />
-  </SWrapper>
-);
+class Layout extends Component {
+  state = {
+    menu: [
+      { title: 'Hoodies', pathname: '/hoodies' },
+      { title: 'T-Shirts', pathname: '/tshirts' },
+      { title: 'Caps', pathname: '/caps' }
+    ]
+  };
+  render() {
+    const { menu } = this.state;
+    const { children } = this.props;
+    return (
+      <SWrapper>
+        <SHeader>
+          <Link to="/">
+            <SLogo>
+              <img src={logo} alt="logo" />
+            </SLogo>
+          </Link>
+          <SMenu>
+            {menu.map(item => <li key={item.title}>{item.title}</li>)}
+          </SMenu>
+        </SHeader>
+        <SContent>{children}</SContent>
+        <Modal />
+      </SWrapper>
+    );
+  }
+}
 
 Layout.propTypes = {
-  children: PropTypes.node.isRequired,
-  modalShow: PropTypes.bool.isRequired,
-  modalData: PropTypes.object.isRequired,
-  modalToggle: PropTypes.func.isRequired
+  children: PropTypes.node.isRequired
 };
 
 export default Layout;

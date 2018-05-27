@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
 import Layout from '../layout';
 import tshirtPreview from '../assets/tshirt-preview.jpg';
 import walletConnectLogo from '../assets/walletconnect-logo.svg';
+import { modalOpen } from '../reducers/_modal';
+import { orderUpdateProduct } from '../reducers/_order';
 import { fonts, colors } from '../styles';
 
 const SFlex = styled.div`
@@ -118,60 +122,39 @@ const SWalletConnectLogo = styled.div`
 
 class Homepage extends Component {
   state = {
-    modalShow: false,
-    sizeOptions: ['S', 'M', 'L', 'XL'],
-    productName: 'Ethereum T-Shirt',
-    productSize: 'M',
-    productPrice: 20,
-    currency: { value: 'USD', symbol: '$' }
+    sizeOptions: ['S', 'M', 'L', 'XL']
   };
-  modalToggle = bool =>
-    this.setState({
-      modalShow: typeof bool !== 'undefined' ? bool : !this.state.modalShow
-    });
   render = () => {
-    const order = {
-      product: {
-        name: this.state.productName,
-        size: this.state.productSize,
-        price: this.state.productPrice,
-        currency: this.state.currency
-      }
-    };
+    const { sizeOptions } = this.state;
+    const { product, modalOpen, orderUpdateProduct } = this.props;
     return (
-      <Layout
-        modalShow={this.state.modalShow}
-        modalData={order}
-        modalToggle={this.modalToggle}
-      >
+      <Layout>
         <SFlex>
           <SPreview>
             <img src={tshirtPreview} alt="Ethereum T-Shirt" />
           </SPreview>
           <SDetails>
-            <STitle>{this.state.productName}</STitle>
-            <SDescription>
-              The perfect t-shirt for buidlers on Ethereum
-            </SDescription>
+            <STitle>{product.name}</STitle>
+            <SDescription>{product.description}</SDescription>
             <SSizes>
-              <p>Select Size</p>
+              <p>{'Select Size'}</p>
               <ul>
-                {this.state.sizeOptions.map(option => (
+                {sizeOptions.map(option => (
                   <SSizeOption
                     key={option}
-                    selected={this.state.productSize === option}
-                    onClick={() => this.setState({ productSize: option })}
+                    selected={product.size === option}
+                    onClick={() => orderUpdateProduct({ size: option })}
                   >
                     {option}
                   </SSizeOption>
                 ))}
               </ul>
             </SSizes>
-            <SPrice>{`${this.state.currency.symbol}${Number(
-              this.state.productPrice
-            ).toFixed(2)}`}</SPrice>
+            <SPrice>{`${product.currency.symbol}${Number(product.price).toFixed(
+              2
+            )}`}</SPrice>
             <SActions>
-              <SPayWithWalletConnect onClick={() => this.modalToggle()}>
+              <SPayWithWalletConnect onClick={() => modalOpen({ product })}>
                 <SWalletConnectLogo />
                 <span>Pay</span>
               </SPayWithWalletConnect>
@@ -183,4 +166,17 @@ class Homepage extends Component {
   };
 }
 
-export default Homepage;
+Homepage.propTypes = {
+  product: PropTypes.object.isRequired,
+  orderUpdateProduct: PropTypes.func.isRequired,
+  modalOpen: PropTypes.func.isRequired
+};
+
+const reduxProps = ({ order }) => ({
+  product: order.product
+});
+
+export default connect(reduxProps, {
+  orderUpdateProduct,
+  modalOpen
+})(Homepage);
