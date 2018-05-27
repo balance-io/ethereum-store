@@ -19,6 +19,7 @@ const StyledRow = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
+  margin-bottom: 22px;
 `;
 
 class OrderConfirmation extends Component {
@@ -27,7 +28,7 @@ class OrderConfirmation extends Component {
     return (
       <Layout>
         <StyledColumn>
-          <h1>{'Awaiting Payment'}</h1>
+          <h1>{'Order Confirmation'}</h1>
 
           <StyledRow>
             <div>
