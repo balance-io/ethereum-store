@@ -7,7 +7,6 @@ const ORDER_UPDATE_STATUS = 'order/ORDER_UPDATE_STATUS';
 // -- Actions --------------------------------------------------------------- //
 
 export const orderUpdateProduct = productData => (dispatch, getState) => {
-  console.log('productData', productData);
   let { product } = getState().order;
   product = { ...product, ...productData };
   dispatch({
@@ -17,7 +16,6 @@ export const orderUpdateProduct = productData => (dispatch, getState) => {
 };
 
 export const orderUpdateShipping = shippingData => (dispatch, getState) => {
-  console.log('shippingData', shippingData);
   let { shipping } = getState().order;
   shipping = { ...shipping, ...shippingData };
   dispatch({
@@ -54,7 +52,7 @@ const INITIAL_STATE = {
     zipCode: '',
     country: ''
   },
-  status: { completed: false, paid: false }
+  status: { completed: false, paid: false, txHash: '' }
 };
 
 export default (state = INITIAL_STATE, action) => {

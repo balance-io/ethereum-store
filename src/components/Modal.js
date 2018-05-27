@@ -134,14 +134,12 @@ Modal.propTypes = {
   walletConnectModalInit: PropTypes.func.isRequired,
   walletConnectClearFields: PropTypes.func.isRequired,
   fetching: PropTypes.bool.isRequired,
-  txHash: PropTypes.string.isRequired,
   qrcode: PropTypes.string.isRequired
 };
 
 const reduxProps = ({ walletconnect, modal }) => ({
   modalShow: modal.modalShow,
   fetching: walletconnect.fetching,
-  txHash: walletconnect.txHash,
   qrcode: walletconnect.qrcode
 });
 

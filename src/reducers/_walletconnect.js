@@ -3,7 +3,7 @@ import {
   walletConnectGetAccounts,
   walletConnectSignTransaction
 } from '../walletconnect';
-import { orderUpdateShipping } from './_order';
+import { orderUpdateShipping, orderUpdateStatus } from './_order';
 import { modalClose } from './_modal';
 
 // -- Constants ------------------------------------------------------------- //
@@ -25,6 +25,11 @@ const WALLET_CONNECT_SUBMIT_ORDER_FAILURE =
 const WALLET_CONNECT_CLEAR_FIELDS = 'walletConnect/WALLET_CONNECT_CLEAR_FIELDS';
 
 // -- Actions --------------------------------------------------------------- //
+
+export const walletConnectClearFields = () => dispatch => {
+  dispatch({ type: WALLET_CONNECT_CLEAR_FIELDS });
+  dispatch(modalClose());
+};
 
 export const walletConnectSubmitOrder = () => (dispatch, getState) => {
   dispatch({ type: WALLET_CONNECT_SUBMIT_ORDER_REQUEST });
@@ -65,10 +70,11 @@ export const walletConnectSubmitOrder = () => (dispatch, getState) => {
           if (txHash) {
             console.log('walletConnectSignTransaction SUCCESS');
             dispatch({
-              type: WALLET_CONNECT_SUBMIT_ORDER_SUCCESS,
-              payload: txHash
+              type: WALLET_CONNECT_SUBMIT_ORDER_SUCCESS
             });
-            this.setState({ txHash });
+            dispatch(orderUpdateStatus({ completed: true, txHash }));
+            dispatch(walletConnectClearFields());
+            window.browserHistory.push('/order-confirmation');
           } else {
             console.log('walletConnectSignTransaction ERROR');
             throw new Error('Could not send transaction via Wallet Connect');
@@ -107,17 +113,11 @@ export const walletConnectModalInit = () => async (dispatch, getState) => {
     });
 };
 
-export const walletConnectClearFields = () => dispatch => {
-  dispatch({ type: WALLET_CONNECT_CLEAR_FIELDS });
-  dispatch(modalClose());
-};
-
 // -- Reducer --------------------------------------------------------------- //
 const INITIAL_STATE = {
   fetching: false,
   webConnector: null,
-  qrcode: '',
-  txHash: ''
+  qrcode: ''
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -140,11 +140,6 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         fetching: false,
         webConnector: null
-      };
-    case WALLET_CONNECT_SUBMIT_ORDER_SUCCESS:
-      return {
-        ...state,
-        txHash: action.payload
       };
     case WALLET_CONNECT_CLEAR_FIELDS:
       return { ...state, ...INITIAL_STATE };
