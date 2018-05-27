@@ -16,6 +16,7 @@ const SPreview = styled.div`
   padding-right: 40px;
   & img {
     width: 100%;
+    padding-bottom: 120px;
   }
 `;
 
@@ -66,6 +67,7 @@ const SPrice = styled.p`
   font-weight: ${fonts.weight.bold};
   font-size: ${fonts.size.xlarge};
   font-family: ${fonts.family.SFMono};
+  margin: 0 0 0 0;
 `;
 
 const SActions = styled.div`
@@ -74,9 +76,9 @@ const SActions = styled.div`
 
 const SPayWithWalletConnect = styled.button`
   position: relative;
-  margin-top: 20px;
+  margin-top: 24px;
   cursor: pointer;
-  padding: 0;
+  padding: 0 0 4px 0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -94,7 +96,8 @@ const SPayWithWalletConnect = styled.button`
   transition: 0.15s ease;
   will-change: transform;
   & span {
-    margin-left: 6px;
+    margin-left: 4px;
+    margin-right: 10px;
   }
   &:hover {
     box-shadow: 0 7px 14px 0 rgba(50, 50, 93, 0.1),
