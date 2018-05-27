@@ -27,7 +27,9 @@ class OrderConfirmation extends Component {
     return (
       <Layout>
         <StyledColumn>
-          <h1>{status.confirmed ? 'Order Confirmed' : 'Order Pending'}</h1>
+          <h1>{'Order Confirmed'}</h1>
+
+          <p>{`Awaiting payment: ${status.txHash}`}</p>
 
           <StyledRow>
             <div>
