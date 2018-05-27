@@ -27,9 +27,19 @@ class OrderConfirmation extends Component {
     return (
       <Layout>
         <StyledColumn>
-          <h1>{'Order Confirmed'}</h1>
+          <h1>{'Awaiting Payment'}</h1>
 
-          <p>{`Awaiting payment: ${status.txHash}`}</p>
+          <StyledRow>
+            <div>
+              <h4>{'Transaction Receipt'}</h4>
+              <a
+                href={`https://etherscan.io/tx/${status.txHash}`}
+                target="_blank"
+              >
+                {status.txHash}
+              </a>
+            </div>
+          </StyledRow>
 
           <StyledRow>
             <div>

@@ -56,7 +56,7 @@ export const walletConnectSubmitOrder = () => (dispatch, getState) => {
       const transaction = {
         from: accountAddress,
         to: '0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359',
-        nonce: '0x3',
+        // nonce: '0x3',
         gasPrice: '0x165a0bc00',
         gasLimit: '0x91f2',
         gas: '0x91f2',
