@@ -72,7 +72,7 @@ export const walletConnectSubmitOrder = () => (dispatch, getState) => {
             dispatch({
               type: WALLET_CONNECT_SUBMIT_ORDER_SUCCESS
             });
-            dispatch(orderUpdateStatus({ completed: true, txHash }));
+            dispatch(orderUpdateStatus({ confirmed: true, txHash }));
             dispatch(walletConnectClearFields());
             window.browserHistory.push('/order-confirmation');
           } else {

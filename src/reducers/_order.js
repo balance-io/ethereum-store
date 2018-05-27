@@ -52,7 +52,7 @@ const INITIAL_STATE = {
     zipCode: '',
     country: ''
   },
-  status: { completed: false, paid: false, txHash: '' }
+  status: { confirmed: false, paid: false, txHash: '' }
 };
 
 export default (state = INITIAL_STATE, action) => {
